@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Validate Me!</title>
+   
+</head>
+<body>
+
+    
+    <h2>Validate me!</h2>
+    <form id="myForm">
+        <label>Username (6-8 characters)</label><br>
+        <input type="text" id="username" required><br><br>
+
+        <label>Pin</label><br>
+        <input type="text" id="pin" required><br><br>
+
+        <label>States</label><br>
+        <select id="state" required>
+            <option value="">--Select--</option>
+            <option value="option1">Maharashtra</option>
+            <option value="option2">Karnataka</option>
+            <option value="option3">Uttar Pradesh</option>
+            <option value="option4">Gujrat</option>
+            <option value="option5">Himachal Pradesh</option>
+        </select><br><br>
+
+        <!-- Checkbox -->
+        <input type="checkbox" id="validatePin"> Validate Pin<br><br>
+
+        <!-- Radio buttons -->
+        <label>Select one Food:</label><br>
+        <input type="radio" name="food" value="Milk"> Milk <br>
+        <input type="radio" name="food" value="Butter"> Butter <br>
+        <input type="radio" name="food" value="Cheese"> Cheese <br><br>
+
+        <button type="button" onclick="validateForm()">Check Form</button>
+    </form>
+
+    <p id="result" style="color:red;"></p>
+     <script >
+        function validateForm() {
+    let username = document.getElementById("username").value;
+    let pin = document.getElementById("pin").value;
+    let state = document.getElementById("state").value;
+    let validatePin = document.getElementById("validatePin").checked;
+    let result = document.getElementById("result");
+    let radios = document.getElementsByName("food");
+
+    let messages = [];
+
+    
+    if (username.length < 6 || username.length > 8) {
+        messages.push("Username should be between 6 and 8 characters");
+    }
+
+     
+    if (validatePin) {
+        let alphaNum = /^[a-zA-Z0-9]+$/;
+        if (!alphaNum.test(pin)) {
+            messages.push("Pin should be alphanumeric");
+        }
+    }
+
+    if (state === "") {
+        messages.push("State should be selected");
+    }
+
+   
+    let radioSelected = false;
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            radioSelected = true;
+        }
+    }
+    if (!radioSelected) {
+        messages.push("Please select a food option");
+    }
+
+    if (messages.length > 0) {
+        result.innerHTML = messages.join("<br>");
+    } else {
+        result.innerHTML = "Form validated successfully!";
+        result.style.color = "green";
+    }
+}
+
+
+    </script>
+</body>
+</html>
