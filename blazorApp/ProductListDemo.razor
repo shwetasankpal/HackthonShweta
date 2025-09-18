@@ -1,0 +1,25 @@
+﻿@using blazorApp.Shared
+@inject HttpClient http
+<div>
+    <h3>ProductListDemo</h3>
+    @if(productList != null){
+        @foreach(var product in productList)
+        {
+            <p>@product.Name - @product.Price</p>
+        }
+    }
+    else
+    {
+        <p>Product List not available</p>
+    }
+</div>
+
+@code {
+    private List<Product> productList = null;
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        productList = await http.GetFromJsonAsync<List<Product>>("");
+    }
+
+}
